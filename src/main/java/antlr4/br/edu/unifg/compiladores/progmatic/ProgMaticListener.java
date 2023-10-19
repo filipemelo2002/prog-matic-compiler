@@ -268,6 +268,46 @@ public interface ProgMaticListener extends ParseTreeListener {
 	 */
 	void exitParameter(ProgMaticParser.ParameterContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link ProgMaticParser#printStatement}.
+	 * @param ctx the parse tree
+	 */
+	void enterPrintStatement(ProgMaticParser.PrintStatementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ProgMaticParser#printStatement}.
+	 * @param ctx the parse tree
+	 */
+	void exitPrintStatement(ProgMaticParser.PrintStatementContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ProgMaticParser#inputStatement}.
+	 * @param ctx the parse tree
+	 */
+	void enterInputStatement(ProgMaticParser.InputStatementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ProgMaticParser#inputStatement}.
+	 * @param ctx the parse tree
+	 */
+	void exitInputStatement(ProgMaticParser.InputStatementContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ProgMaticParser#print}.
+	 * @param ctx the parse tree
+	 */
+	void enterPrint(ProgMaticParser.PrintContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ProgMaticParser#print}.
+	 * @param ctx the parse tree
+	 */
+	void exitPrint(ProgMaticParser.PrintContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ProgMaticParser#read}.
+	 * @param ctx the parse tree
+	 */
+	void enterRead(ProgMaticParser.ReadContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ProgMaticParser#read}.
+	 * @param ctx the parse tree
+	 */
+	void exitRead(ProgMaticParser.ReadContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link ProgMaticParser#procedure}.
 	 * @param ctx the parse tree
 	 */

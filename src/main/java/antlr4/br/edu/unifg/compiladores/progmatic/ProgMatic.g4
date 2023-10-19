@@ -9,7 +9,9 @@ statements
     | procedureCall
     | attribution
     | ifDeclaration
-    | loopDeclaraion;
+    | loopDeclaraion
+    | printStatement
+    | inputStatement;
 
 variableDeclaration: typeDeclaration IDENTIFIER SEMICOLON | typeDeclaration attribution;
 
@@ -63,6 +65,9 @@ logicalNotExpression : LOGICAL_NOT primaryExpression;
 parameterList : (parameter (COMMA parameter)*)?;
 parameter : typeDeclaration IDENTIFIER;
 
+printStatement: print LPAREN (expression | attributionValues) RPAREN SEMICOLON;
+inputStatement: read LPAREN IDENTIFIER RPAREN SEMICOLON;
+
 INTEGER_LITERAL: [0-9]+;
 STRING_LITERAL: '"' (~["\r\n])* '"';
 CHAR_LITERAL: '\'' ~["\r\n'] '\'';
@@ -92,7 +97,8 @@ LESS_EQUAL : '<=';
 LOGICAL_AND : '&&';
 LOGICAL_OR : '||';
 LOGICAL_NOT : '!';
-
+print: 'print';
+read:  'read';
 
 procedure: 'func';
 
