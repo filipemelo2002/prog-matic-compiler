@@ -5,8 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6a81c8dd-06e3-490b-96e3-58507d325299" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/edu/unifg/compiladores/progmatic/ast/ASTNode.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/edu/unifg/compiladores/progmatic/ast/AdditiveExpression.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/test.pm" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/test.pm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/antlr4/br/edu/unifg/compiladores/progmatic/ProgMatic.g4" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/antlr4/br/edu/unifg/compiladores/progmatic/ProgMatic.g4" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,6 +18,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -39,11 +42,11 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Users/filip/OneDrive/Documentos/intelliJ/Linguagem-Komodo",
+    "last_opened_file_path": "C:/Users/filip/OneDrive/Documentos/intelliJ/progmatic-compiler",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.0",
-    "settings.editor.selected.configurable": "reference.settings.project.maven.repository.indices"
+    "settings.editor.selected.configurable": "preferences.lookFeel"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -88,5 +91,16 @@
       <updated>1697597542105</updated>
     </task>
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>

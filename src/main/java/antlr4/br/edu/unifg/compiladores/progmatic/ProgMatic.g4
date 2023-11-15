@@ -1,8 +1,30 @@
 grammar ProgMatic;
 
-program: (statements)* EOF;
+@parser::header{
+    import java.util.Map;
+    import java.util.HashMap;
+    import java.util.List;
+    import java.util.ArrayList;
+    import br.edu.unifg.compiladores.progmatic.ast*;
+}
 
-statements
+@parser::members {
+	Map<String, Object> symbolTable = new HashMap<String, Object>();
+}
+
+program:
+    {
+        List<ASTNode> body = new ArrayList<ASTNode>();
+        Map<String, Object> symbolTable = new HashMap<String, Object>();
+    }
+    (statements {body.add($statements.node);})* EOF
+    {
+        for (ASTNode n : body) {
+            n.execute(symbolTable);
+        }
+    };
+
+statements returns [ASTNode node]
     : variableDeclaration
     | pointerDeclaration
     | procedureDeclaration
@@ -47,9 +69,11 @@ equalityExpression : relationalExpression ((EQUAL | NOT_EQUAL) relationalExpress
 
 relationalExpression : additiveExpression ((LESS | GREATER | LESS_EQUAL | GREATER_EQUAL) additiveExpression)*;
 
-additiveExpression : multiplicativeExpression ((PLUS | MINUS) multiplicativeExpression)*;
+additiveExpression returns [ASTNode node]:
+    multiplicativeExpression {$node = $multiplicativeExpression.node;}
+    ((PLUS | MINUS) right = multiplicativeExpression {$node = new AdditiveExpression($node, $right.node, $(PLUS | MINUS).text);})*;
 
-multiplicativeExpression : unaryExpression ((MULTIPLY | DIVIDE | MODULO) unaryExpression)*;
+multiplicativeExpression returns [ASTNode node]: unaryExpression ((MULTIPLY | DIVIDE | MODULO) unaryExpression)*;
 
 unaryExpression : (PLUS | MINUS) unaryExpression
                | primaryExpression;
