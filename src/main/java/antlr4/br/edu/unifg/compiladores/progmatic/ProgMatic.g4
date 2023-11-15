@@ -5,7 +5,7 @@ grammar ProgMatic;
     import java.util.HashMap;
     import java.util.List;
     import java.util.ArrayList;
-    import br.edu.unifg.compiladores.progmatic.ast*;
+    import br.edu.unifg.compiladores.progmatic.ast.*;
 }
 
 @parser::members {
@@ -71,7 +71,7 @@ relationalExpression : additiveExpression ((LESS | GREATER | LESS_EQUAL | GREATE
 
 additiveExpression returns [ASTNode node]:
     multiplicativeExpression {$node = $multiplicativeExpression.node;}
-    ((PLUS | MINUS) right = multiplicativeExpression {$node = new AdditiveExpression($node, $right.node, $(PLUS | MINUS).text);})*;
+    (operator=(PLUS | MINUS) right = multiplicativeExpression {$node = new AdditiveExpression($node, $right.node, $operator.text);})*;
 
 multiplicativeExpression returns [ASTNode node]: unaryExpression ((MULTIPLY | DIVIDE | MODULO) unaryExpression)*;
 
