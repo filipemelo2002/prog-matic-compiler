@@ -73,9 +73,11 @@ additiveExpression returns [ASTNode node]:
     multiplicativeExpression {$node = $multiplicativeExpression.node;}
     (operator=(PLUS | MINUS) right = multiplicativeExpression {$node = new AdditiveExpression($node, $right.node, $operator.text);})*;
 
-multiplicativeExpression returns [ASTNode node]: unaryExpression ((MULTIPLY | DIVIDE | MODULO) unaryExpression)*;
+multiplicativeExpression returns [ASTNode node]:
+    unaryExpression {$node = $unaryExpression.node;}
+    (operator = (MULTIPLY | DIVIDE | MODULO) right = unaryExpression {$node = new MultiplicativeExpression($node, $right.node, $operator.text);})*;
 
-unaryExpression : (PLUS | MINUS) unaryExpression
+unaryExpression returns [ASTNode node]: (PLUS | MINUS) unaryExpression
                | primaryExpression;
 
 primaryExpression : logicalNotExpression
