@@ -61,7 +61,7 @@ expression : logicalOrExpression;
 
 conditionalExpression: logicalOrExpression ((EQUAL | NOT_EQUAL | GREATER | LESS | GREATER_EQUAL | LESS_EQUAL))*;
 
-logicalOrExpression : logicalAndExpression (LOGICAL_OR logicalAndExpression)*;
+logicalOrExpression returns [ASTNode node]: logicalAndExpression (LOGICAL_OR logicalAndExpression)*;
 
 logicalAndExpression : equalityExpression (LOGICAL_AND equalityExpression)*;
 
@@ -82,12 +82,16 @@ unaryExpression returns [ASTNode node]:
                | primaryExpression {$node = $primaryExpression.node;};
 
 primaryExpression returns [ASTNode node]:
-    logicalNotExpression
-    | INTEGER_LITERAL
-    | IDENTIFIER
-    | LPAREN expression RPAREN;
+    logicalNotExpression {$node = $logicalNotExpression.node;}
+    | INTEGER_LITERAL {$node = new Constant(Integer.parseInt($INTEGER_LITERAL.text));}
+    | BOOLEAN_LITERAL {$node = new Constant(Boolean.parseBoolean($BOOLEAN_LITERAL.text));}
+    | CHAR_LITERAL {$node = new Constant($CHAR_LITERAL.text.charAt(1));}
+    | STRING_LITERAL {$node = new Constant($STRING_LITERAL.text.substring(1, $STRING_LITERAL.text.length() - 1));}
+    | FLOAT_LITERAL {$node = new Constant(Float.parseFloat($FLOAT_LITERAL.text));}
+    | IDENTIFIER {$node = new VarRef($IDENTIFIER.text);}
+    | LPAREN expr=logicalOrExpression RPAREN {$node = $expr.node;};
 
-logicalNotExpression : LOGICAL_NOT primaryExpression;
+logicalNotExpression returns [ASTNode node]: LOGICAL_NOT primaryExpression;
 
 
 parameterList : (parameter (COMMA parameter)*)?;
