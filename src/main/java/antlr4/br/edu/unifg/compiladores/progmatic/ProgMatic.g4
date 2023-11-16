@@ -77,13 +77,15 @@ multiplicativeExpression returns [ASTNode node]:
     unaryExpression {$node = $unaryExpression.node;}
     (operator = (MULTIPLY | DIVIDE | MODULO) right = unaryExpression {$node = new MultiplicativeExpression($node, $right.node, $operator.text);})*;
 
-unaryExpression returns [ASTNode node]: (PLUS | MINUS) unaryExpression
-               | primaryExpression;
+unaryExpression returns [ASTNode node]:
+            operator = (PLUS | MINUS) operand = unaryExpression {$node = new UnaryExpression($operator.text, $operand.node);}
+               | primaryExpression {$node = $primaryExpression.node;};
 
-primaryExpression : logicalNotExpression
-                | INTEGER_LITERAL
-                | IDENTIFIER
-                | LPAREN expression RPAREN;
+primaryExpression returns [ASTNode node]:
+    logicalNotExpression
+    | INTEGER_LITERAL
+    | IDENTIFIER
+    | LPAREN expression RPAREN;
 
 logicalNotExpression : LOGICAL_NOT primaryExpression;
 
