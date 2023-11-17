@@ -60,12 +60,14 @@ loopDeclaraion: 'loop' LPAREN logicalExpression RPAREN LBRACE (statements)* RBRA
 logicalExpression returns [ASTNode node]:
 	  logicalOrExpression {$node = $logicalOrExpression.node;}
 	| logicalAndExpression
-	| LOGICAL_NOT logicalExpression {$node = new LogicalNot($logicalExpression.node);}
+	| LOGICAL_NOT logicalExpression
 	;
 
-logicalOrExpression returns [ASTNode node]: logicalAndExpression (LOGICAL_OR logicalAndExpression)*;
+logicalOrExpression returns [ASTNode node]:
+    logicalAndExpression  {$node = $logicalAndExpression.node;}
+    (LOGICAL_OR right=logicalAndExpression {$node = new LogicalOr($node, $right.node);})*;
 
-logicalAndExpression : equalityExpression (LOGICAL_AND equalityExpression)*;
+logicalAndExpression returns [ASTNode node]: equalityExpression (LOGICAL_AND equalityExpression)*;
 
 equalityExpression : relationalExpression ((EQUAL | NOT_EQUAL) relationalExpression)*;
 
