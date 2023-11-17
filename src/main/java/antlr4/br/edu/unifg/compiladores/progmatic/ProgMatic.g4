@@ -37,7 +37,7 @@ statements returns [ASTNode node]
 
 variableDeclaration: typeDeclaration IDENTIFIER SEMICOLON | typeDeclaration attribution;
 
-attribution: IDENTIFIER ATTRIBUTION (expression | attributionValues) SEMICOLON;
+attribution: IDENTIFIER ATTRIBUTION (logicalExpression | attributionValues) SEMICOLON;
 
 pointerDeclaration: typeDeclaration POINTER IDENTIFIER '=' ADDRESS IDENTIFIER SEMICOLON;
 
@@ -51,15 +51,17 @@ typeDeclaration: 'int' | 'str' | 'char' | 'float' | 'boolean';
 
 attributionValues:  STRING_LITERAL | CHAR_LITERAL | FLOAT_LITERAL | BOOLEAN_LITERAL;
 
-ifDeclaration: 'if' LPAREN conditionalExpression RPAREN LBRACE (statements)* RBRACE (elseDeclaration)*;
+ifDeclaration: 'if' LPAREN logicalExpression RPAREN LBRACE (statements)* RBRACE (elseDeclaration)*;
 
 elseDeclaration: 'else' LBRACE (statements)* RBRACE;
 
-loopDeclaraion: 'loop' LPAREN conditionalExpression RPAREN LBRACE (statements)* RBRACE;
+loopDeclaraion: 'loop' LPAREN logicalExpression RPAREN LBRACE (statements)* RBRACE;
 
-expression : logicalOrExpression;
-
-conditionalExpression: logicalOrExpression ((EQUAL | NOT_EQUAL | GREATER | LESS | GREATER_EQUAL | LESS_EQUAL))*;
+logicalExpression returns [ASTNode node]:
+	  logicalOrExpression {$node = $logicalOrExpression.node;}
+	| logicalAndExpression
+	| LOGICAL_NOT logicalExpression {$node = new LogicalNot($logicalExpression.node);}
+	;
 
 logicalOrExpression returns [ASTNode node]: logicalAndExpression (LOGICAL_OR logicalAndExpression)*;
 
@@ -97,7 +99,7 @@ logicalNotExpression returns [ASTNode node]: LOGICAL_NOT primaryExpression;
 parameterList : (parameter (COMMA parameter)*)?;
 parameter : typeDeclaration IDENTIFIER;
 
-printStatement: print LPAREN (expression | attributionValues) RPAREN SEMICOLON;
+printStatement: print LPAREN (logicalExpression | attributionValues) RPAREN SEMICOLON;
 inputStatement: read LPAREN IDENTIFIER RPAREN SEMICOLON;
 
 INTEGER_LITERAL: [0-9]+;

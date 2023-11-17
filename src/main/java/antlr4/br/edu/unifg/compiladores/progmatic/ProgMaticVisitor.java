@@ -89,17 +89,11 @@ public interface ProgMaticVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitLoopDeclaraion(ProgMaticParser.LoopDeclaraionContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link ProgMaticParser#expression}.
+	 * Visit a parse tree produced by {@link ProgMaticParser#logicalExpression}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitExpression(ProgMaticParser.ExpressionContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link ProgMaticParser#conditionalExpression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitConditionalExpression(ProgMaticParser.ConditionalExpressionContext ctx);
+	T visitLogicalExpression(ProgMaticParser.LogicalExpressionContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link ProgMaticParser#logicalOrExpression}.
 	 * @param ctx the parse tree

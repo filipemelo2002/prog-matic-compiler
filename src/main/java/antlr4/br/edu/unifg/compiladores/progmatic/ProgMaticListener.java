@@ -138,25 +138,15 @@ public interface ProgMaticListener extends ParseTreeListener {
 	 */
 	void exitLoopDeclaraion(ProgMaticParser.LoopDeclaraionContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link ProgMaticParser#expression}.
+	 * Enter a parse tree produced by {@link ProgMaticParser#logicalExpression}.
 	 * @param ctx the parse tree
 	 */
-	void enterExpression(ProgMaticParser.ExpressionContext ctx);
+	void enterLogicalExpression(ProgMaticParser.LogicalExpressionContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link ProgMaticParser#expression}.
+	 * Exit a parse tree produced by {@link ProgMaticParser#logicalExpression}.
 	 * @param ctx the parse tree
 	 */
-	void exitExpression(ProgMaticParser.ExpressionContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link ProgMaticParser#conditionalExpression}.
-	 * @param ctx the parse tree
-	 */
-	void enterConditionalExpression(ProgMaticParser.ConditionalExpressionContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link ProgMaticParser#conditionalExpression}.
-	 * @param ctx the parse tree
-	 */
-	void exitConditionalExpression(ProgMaticParser.ConditionalExpressionContext ctx);
+	void exitLogicalExpression(ProgMaticParser.LogicalExpressionContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link ProgMaticParser#logicalOrExpression}.
 	 * @param ctx the parse tree

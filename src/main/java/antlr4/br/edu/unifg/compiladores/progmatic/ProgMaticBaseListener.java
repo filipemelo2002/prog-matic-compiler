@@ -173,25 +173,13 @@ public class ProgMaticBaseListener implements ProgMaticListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterExpression(ProgMaticParser.ExpressionContext ctx) { }
+	@Override public void enterLogicalExpression(ProgMaticParser.LogicalExpressionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitExpression(ProgMaticParser.ExpressionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterConditionalExpression(ProgMaticParser.ConditionalExpressionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitConditionalExpression(ProgMaticParser.ConditionalExpressionContext ctx) { }
+	@Override public void exitLogicalExpression(ProgMaticParser.LogicalExpressionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
