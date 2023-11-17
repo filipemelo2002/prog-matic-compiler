@@ -67,9 +67,11 @@ logicalOrExpression returns [ASTNode node]:
     logicalAndExpression  {$node = $logicalAndExpression.node;}
     (LOGICAL_OR right=logicalAndExpression {$node = new LogicalOr($node, $right.node);})*;
 
-logicalAndExpression returns [ASTNode node]: equalityExpression (LOGICAL_AND equalityExpression)*;
+logicalAndExpression returns [ASTNode node]:
+    equalityExpression {$node = $equalityExpression.node;}
+    (LOGICAL_AND right=equalityExpression {$node = new LogicalAnd($node, $right.node);})*;
 
-equalityExpression : relationalExpression ((EQUAL | NOT_EQUAL) relationalExpression)*;
+equalityExpression returns [ASTNode node]: relationalExpression ((EQUAL | NOT_EQUAL) relationalExpression)*;
 
 relationalExpression : additiveExpression ((LESS | GREATER | LESS_EQUAL | GREATER_EQUAL) additiveExpression)*;
 
