@@ -108,7 +108,10 @@ logicalNotExpression returns [ASTNode node]:
 parameterList : (parameter (COMMA parameter)*)?;
 parameter : typeDeclaration IDENTIFIER;
 
-printStatement: print LPAREN (logicalExpression | attributionValues) RPAREN SEMICOLON;
+printStatement returns [ASTNode node]:
+    print LPAREN logicalExpression RPAREN SEMICOLON {$node = new PrintExpression($logicalExpression.node);}
+    ;
+
 inputStatement: read LPAREN IDENTIFIER RPAREN SEMICOLON;
 
 INTEGER_LITERAL: [0-9]+;

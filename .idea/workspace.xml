@@ -5,8 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6a81c8dd-06e3-490b-96e3-58507d325299" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/test/testing.pm" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/antlr4/br/edu/unifg/compiladores/progmatic/ProgMatic.g4" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/antlr4/br/edu/unifg/compiladores/progmatic/ProgMatic.g4" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/antlr4/br/edu/unifg/compiladores/progmatic/ProgMaticParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/antlr4/br/edu/unifg/compiladores/progmatic/ProgMaticParser.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,7 +59,7 @@
       <command value="mvn clean" />
     </option>
   </component>
-  <component name="RunManager" selected="Application.TokenReader">
+  <component name="RunManager" selected="Application.Main">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Main" />
       <module name="progmatic-compiler" />
@@ -74,8 +76,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.TokenReader" />
         <item itemvalue="Application.Main" />
+        <item itemvalue="Application.TokenReader" />
       </list>
     </recent_temporary>
   </component>
