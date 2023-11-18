@@ -7,8 +7,6 @@
     <list default="true" id="6a81c8dd-06e3-490b-96e3-58507d325299" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/antlr4/br/edu/unifg/compiladores/progmatic/ProgMatic.g4" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/antlr4/br/edu/unifg/compiladores/progmatic/ProgMatic.g4" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/antlr4/br/edu/unifg/compiladores/progmatic/ProgMatic.interp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/antlr4/br/edu/unifg/compiladores/progmatic/ProgMatic.interp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/antlr4/br/edu/unifg/compiladores/progmatic/ProgMaticParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/antlr4/br/edu/unifg/compiladores/progmatic/ProgMaticParser.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

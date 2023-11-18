@@ -75,7 +75,9 @@ equalityExpression returns [ASTNode node]:
     relationalExpression {$node = $relationalExpression.node;}
     (operator=(EQUAL | NOT_EQUAL) right=relationalExpression {$node = new EqualityExpression($node, $right.node, $operator.text);})*;
 
-relationalExpression returns [ASTNode node]: additiveExpression ((LESS | GREATER | LESS_EQUAL | GREATER_EQUAL) additiveExpression)*;
+relationalExpression returns [ASTNode node]:
+    additiveExpression {$node = $additiveExpression.node;}
+    (operator=(LESS | GREATER | LESS_EQUAL | GREATER_EQUAL) right=additiveExpression {$node = new RelationalExpression($node, $right.node, $operator.text);})*;
 
 additiveExpression returns [ASTNode node]:
     multiplicativeExpression {$node = $multiplicativeExpression.node;}
