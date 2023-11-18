@@ -101,7 +101,8 @@ primaryExpression returns [ASTNode node]:
     | IDENTIFIER {$node = new VarRef($IDENTIFIER.text);}
     | LPAREN expr=logicalOrExpression RPAREN {$node = $expr.node;};
 
-logicalNotExpression returns [ASTNode node]: LOGICAL_NOT primaryExpression;
+logicalNotExpression returns [ASTNode node]:
+    LOGICAL_NOT operand=primaryExpression {$node = new LogicalNot($operand.node);};
 
 
 parameterList : (parameter (COMMA parameter)*)?;
