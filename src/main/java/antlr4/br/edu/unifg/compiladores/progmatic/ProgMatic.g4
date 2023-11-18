@@ -59,8 +59,8 @@ loopDeclaraion: 'loop' LPAREN logicalExpression RPAREN LBRACE (statements)* RBRA
 
 logicalExpression returns [ASTNode node]:
 	  logicalOrExpression {$node = $logicalOrExpression.node;}
-	| logicalAndExpression
-	| LOGICAL_NOT logicalExpression
+	| logicalAndExpression {$node = $logicalAndExpression.node;}
+	| LOGICAL_NOT logicalExpression {$node = $logicalExpression.node;}
 	;
 
 logicalOrExpression returns [ASTNode node]:

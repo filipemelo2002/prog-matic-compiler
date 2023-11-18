@@ -5,6 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6a81c8dd-06e3-490b-96e3-58507d325299" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/antlr4/br/edu/unifg/compiladores/progmatic/ProgMatic.g4" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/antlr4/br/edu/unifg/compiladores/progmatic/ProgMatic.g4" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
