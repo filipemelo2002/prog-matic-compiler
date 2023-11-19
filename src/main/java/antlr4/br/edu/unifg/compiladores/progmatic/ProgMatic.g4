@@ -25,7 +25,7 @@ program:
     };
 
 statements returns [ASTNode node]
-    : variableDeclaration
+    : variableDeclaration {$node = $variableDeclaration.node;}
     | pointerDeclaration
     | procedureDeclaration
     | procedureCall
@@ -39,9 +39,11 @@ printStatement returns [ASTNode node]:
     PRINT LPAREN logicalExpression RPAREN SEMICOLON {$node = new PrintExpression($logicalExpression.node);}
     ;
 
-variableDeclaration: TYPE_DECLARATION IDENTIFIER SEMICOLON | TYPE_DECLARATION attribution;
+variableDeclaration returns [ASTNode node]:
+    TYPE_DECLARATION IDENTIFIER SEMICOLON {$node = new VarDeclaration($TYPE_DECLARATION.text, $IDENTIFIER.text);}
+    | TYPE_DECLARATION IDENTIFIER ATTRIBUTION  logicalExpression SEMICOLON {$node = new VarDeclaration($TYPE_DECLARATION.text, $IDENTIFIER.text, $logicalExpression.node);};
 
-attribution: IDENTIFIER ATTRIBUTION (logicalExpression) SEMICOLON;
+attribution: IDENTIFIER ATTRIBUTION logicalExpression SEMICOLON;
 
 pointerDeclaration: TYPE_DECLARATION POINTER IDENTIFIER '=' ADDRESS IDENTIFIER SEMICOLON;
 
