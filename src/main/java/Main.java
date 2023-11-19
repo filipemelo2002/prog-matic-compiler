@@ -21,14 +21,13 @@ public class Main {
 
             ProgMaticParser parser = new ProgMaticParser(tokens);
 
-            ProgMaticParser.StatementsContext tree = parser.statements();
+            ProgMaticParser.ProgramContext tree = parser.program();
 
             ProgMaticCustomVisitor visitor = new ProgMaticCustomVisitor();
 
             visitor.visit(tree);
 
         } catch(IOException exception) {
-
             System.out.println("Error processing file " + program);
         }
 
