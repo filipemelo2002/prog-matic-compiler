@@ -41,6 +41,18 @@ public class ProgMaticBaseListener implements ProgMaticListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterPrintStatement(ProgMaticParser.PrintStatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitPrintStatement(ProgMaticParser.PrintStatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterVariableDeclaration(ProgMaticParser.VariableDeclarationContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -108,18 +120,6 @@ public class ProgMaticBaseListener implements ProgMaticListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitArgumentList(ProgMaticParser.ArgumentListContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterTypeDeclaration(ProgMaticParser.TypeDeclarationContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitTypeDeclaration(ProgMaticParser.TypeDeclarationContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -317,18 +317,6 @@ public class ProgMaticBaseListener implements ProgMaticListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterPrintStatement(ProgMaticParser.PrintStatementContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitPrintStatement(ProgMaticParser.PrintStatementContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterInputStatement(ProgMaticParser.InputStatementContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -336,42 +324,6 @@ public class ProgMaticBaseListener implements ProgMaticListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitInputStatement(ProgMaticParser.InputStatementContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterPrint(ProgMaticParser.PrintContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitPrint(ProgMaticParser.PrintContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterRead(ProgMaticParser.ReadContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitRead(ProgMaticParser.ReadContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterProcedure(ProgMaticParser.ProcedureContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitProcedure(ProgMaticParser.ProcedureContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

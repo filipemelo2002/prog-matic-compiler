@@ -23,6 +23,12 @@ public interface ProgMaticVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitStatements(ProgMaticParser.StatementsContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link ProgMaticParser#printStatement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitPrintStatement(ProgMaticParser.PrintStatementContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link ProgMaticParser#variableDeclaration}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -58,12 +64,6 @@ public interface ProgMaticVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitArgumentList(ProgMaticParser.ArgumentListContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link ProgMaticParser#typeDeclaration}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitTypeDeclaration(ProgMaticParser.TypeDeclarationContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link ProgMaticParser#attributionValues}.
 	 * @param ctx the parse tree
@@ -161,33 +161,9 @@ public interface ProgMaticVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitParameter(ProgMaticParser.ParameterContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link ProgMaticParser#printStatement}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitPrintStatement(ProgMaticParser.PrintStatementContext ctx);
-	/**
 	 * Visit a parse tree produced by {@link ProgMaticParser#inputStatement}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitInputStatement(ProgMaticParser.InputStatementContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link ProgMaticParser#print}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitPrint(ProgMaticParser.PrintContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link ProgMaticParser#read}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitRead(ProgMaticParser.ReadContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link ProgMaticParser#procedure}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitProcedure(ProgMaticParser.ProcedureContext ctx);
 }
