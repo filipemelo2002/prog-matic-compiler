@@ -32,22 +32,24 @@ statements returns [ASTNode node]
     | attribution
     | ifDeclaration
     | loopDeclaraion
-    | printStatement
+    | printStatement {$node = $printStatement.node;}
     | inputStatement;
 
-variableDeclaration: typeDeclaration IDENTIFIER SEMICOLON | typeDeclaration attribution;
+printStatement returns [ASTNode node]:
+    PRINT LPAREN logicalExpression RPAREN SEMICOLON {$node = new PrintExpression($logicalExpression.node);}
+    ;
+
+variableDeclaration: TYPE_DECLARATION IDENTIFIER SEMICOLON | TYPE_DECLARATION attribution;
 
 attribution: IDENTIFIER ATTRIBUTION (logicalExpression | attributionValues) SEMICOLON;
 
-pointerDeclaration: typeDeclaration POINTER IDENTIFIER '=' ADDRESS IDENTIFIER SEMICOLON;
+pointerDeclaration: TYPE_DECLARATION POINTER IDENTIFIER '=' ADDRESS IDENTIFIER SEMICOLON;
 
-procedureDeclaration: procedure IDENTIFIER LPAREN parameterList RPAREN  LBRACE (statements)* RBRACE;
+procedureDeclaration: PROCEDURE IDENTIFIER LPAREN parameterList RPAREN  LBRACE (statements)* RBRACE;
 
 procedureCall: IDENTIFIER '(' argumentList ')' SEMICOLON;
 
 argumentList: (IDENTIFIER (COMMA IDENTIFIER)*)?;
-
-typeDeclaration: 'int' | 'str' | 'char' | 'float' | 'boolean';
 
 attributionValues:  STRING_LITERAL | CHAR_LITERAL | FLOAT_LITERAL | BOOLEAN_LITERAL;
 
@@ -106,13 +108,17 @@ logicalNotExpression returns [ASTNode node]:
 
 
 parameterList : (parameter (COMMA parameter)*)?;
-parameter : typeDeclaration IDENTIFIER;
+parameter : TYPE_DECLARATION IDENTIFIER;
 
-printStatement returns [ASTNode node]:
-    print LPAREN logicalExpression RPAREN SEMICOLON {$node = new PrintExpression($logicalExpression.node);}
-    ;
 
-inputStatement: read LPAREN IDENTIFIER RPAREN SEMICOLON;
+inputStatement: READ LPAREN IDENTIFIER RPAREN SEMICOLON;
+
+PRINT: 'print';
+READ:  'read';
+
+PROCEDURE: 'func';
+
+TYPE_DECLARATION: 'int' | 'str' | 'char' | 'float' | 'boolean';
 
 INTEGER_LITERAL: [0-9]+;
 STRING_LITERAL: '"' (~["\r\n])* '"';
@@ -143,9 +149,6 @@ LESS_EQUAL : '<=';
 LOGICAL_AND : '&&';
 LOGICAL_OR : '||';
 LOGICAL_NOT : '!';
-print: 'print';
-read:  'read';
 
-procedure: 'func';
 
 WS: [ \t\r\n]+ -> skip;
