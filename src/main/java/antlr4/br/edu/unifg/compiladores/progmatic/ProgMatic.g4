@@ -41,7 +41,7 @@ printStatement returns [ASTNode node]:
 
 variableDeclaration: TYPE_DECLARATION IDENTIFIER SEMICOLON | TYPE_DECLARATION attribution;
 
-attribution: IDENTIFIER ATTRIBUTION (logicalExpression | attributionValues) SEMICOLON;
+attribution: IDENTIFIER ATTRIBUTION (logicalExpression) SEMICOLON;
 
 pointerDeclaration: TYPE_DECLARATION POINTER IDENTIFIER '=' ADDRESS IDENTIFIER SEMICOLON;
 
@@ -50,8 +50,6 @@ procedureDeclaration: PROCEDURE IDENTIFIER LPAREN parameterList RPAREN  LBRACE (
 procedureCall: IDENTIFIER '(' argumentList ')' SEMICOLON;
 
 argumentList: (IDENTIFIER (COMMA IDENTIFIER)*)?;
-
-attributionValues:  STRING_LITERAL | CHAR_LITERAL | FLOAT_LITERAL | BOOLEAN_LITERAL;
 
 ifDeclaration: 'if' LPAREN logicalExpression RPAREN LBRACE (statements)* RBRACE (elseDeclaration)*;
 
@@ -68,10 +66,9 @@ loopDeclaraion returns [ASTNode node]: 'loop' LPAREN logicalExpression RPAREN
     ;
 
 logicalExpression returns [ASTNode node]:
-	  logicalOrExpression {$node = $logicalOrExpression.node;}
-	| logicalAndExpression {$node = $logicalAndExpression.node;}
-	| LOGICAL_NOT logicalExpression {$node = $logicalExpression.node;}
-	;
+    logicalOrExpression {$node = $logicalOrExpression.node;}
+    ;
+
 
 logicalOrExpression returns [ASTNode node]:
     logicalAndExpression  {$node = $logicalAndExpression.node;}

@@ -125,18 +125,6 @@ public class ProgMaticBaseListener implements ProgMaticListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterAttributionValues(ProgMaticParser.AttributionValuesContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitAttributionValues(ProgMaticParser.AttributionValuesContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterIfDeclaration(ProgMaticParser.IfDeclarationContext ctx) { }
 	/**
 	 * {@inheritDoc}
