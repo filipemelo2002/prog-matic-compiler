@@ -31,7 +31,7 @@ statements returns [ASTNode node]
     | procedureCall
     | attribution
     | ifDeclaration
-    | loopDeclaraion
+    | loopDeclaraion {$node = $loopDeclaraion.node;}
     | printStatement {$node = $printStatement.node;}
     | inputStatement;
 
@@ -57,7 +57,15 @@ ifDeclaration: 'if' LPAREN logicalExpression RPAREN LBRACE (statements)* RBRACE 
 
 elseDeclaration: 'else' LBRACE (statements)* RBRACE;
 
-loopDeclaraion: 'loop' LPAREN logicalExpression RPAREN LBRACE (statements)* RBRACE;
+loopDeclaraion returns [ASTNode node]: 'loop' LPAREN logicalExpression RPAREN
+    {
+        List<ASTNode> body = new ArrayList<ASTNode>();
+    }
+    LBRACE (s1 = statements {body.add($s1.node);})* RBRACE
+    {
+        $node = new Loop($logicalExpression.node, body);
+    }
+    ;
 
 logicalExpression returns [ASTNode node]:
 	  logicalOrExpression {$node = $logicalOrExpression.node;}
