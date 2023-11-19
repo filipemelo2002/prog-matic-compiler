@@ -29,7 +29,7 @@ statements returns [ASTNode node]
     | pointerDeclaration
     | procedureDeclaration
     | procedureCall
-    | attribution
+    | attribution {$node = $attribution.node;}
     | ifDeclaration
     | loopDeclaraion {$node = $loopDeclaraion.node;}
     | printStatement {$node = $printStatement.node;}
@@ -43,7 +43,8 @@ variableDeclaration returns [ASTNode node]:
     TYPE_DECLARATION IDENTIFIER SEMICOLON {$node = new VarDeclaration($TYPE_DECLARATION.text, $IDENTIFIER.text);}
     | TYPE_DECLARATION IDENTIFIER ATTRIBUTION  logicalExpression SEMICOLON {$node = new VarDeclaration($TYPE_DECLARATION.text, $IDENTIFIER.text, $logicalExpression.node);};
 
-attribution: IDENTIFIER ATTRIBUTION logicalExpression SEMICOLON;
+attribution returns [ASTNode node]:
+    IDENTIFIER ATTRIBUTION logicalExpression SEMICOLON {$node = new VarAttribution($IDENTIFIER.text, $logicalExpression.node);};
 
 pointerDeclaration: TYPE_DECLARATION POINTER IDENTIFIER '=' ADDRESS IDENTIFIER SEMICOLON;
 
