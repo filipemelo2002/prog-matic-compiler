@@ -30,7 +30,7 @@ statements returns [ASTNode node]
     | procedureDeclaration
     | procedureCall
     | attribution {$node = $attribution.node;}
-    | ifDeclaration
+    | ifDeclaration {$node = $ifDeclaration.node;}
     | loopDeclaraion {$node = $loopDeclaraion.node;}
     | printStatement {$node = $printStatement.node;}
     | inputStatement;
@@ -54,9 +54,17 @@ procedureCall: IDENTIFIER '(' argumentList ')' SEMICOLON;
 
 argumentList: (IDENTIFIER (COMMA IDENTIFIER)*)?;
 
-ifDeclaration: 'if' LPAREN logicalExpression RPAREN LBRACE (statements)* RBRACE (elseDeclaration)*;
-
-elseDeclaration: 'else' LBRACE (statements)* RBRACE;
+ifDeclaration returns [ASTNode node]: 'if' LPAREN logicalExpression RPAREN
+    {
+        List<ASTNode> ifBody = new ArrayList<ASTNode>();
+        List<ASTNode> elseBody = new ArrayList<ASTNode>();
+    }
+    LBRACE (s1 = statements {ifBody.add($s1.node);})* RBRACE
+    ('else' LBRACE (s2 = statements {elseBody.add($s2.node);})* RBRACE)?
+    {
+        $node = new IfExpression(ifBody, elseBody, $logicalExpression.node);
+    }
+    ;
 
 loopDeclaraion returns [ASTNode node]: 'loop' LPAREN logicalExpression RPAREN
     {

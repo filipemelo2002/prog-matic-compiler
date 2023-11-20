@@ -71,12 +71,6 @@ public interface ProgMaticVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitIfDeclaration(ProgMaticParser.IfDeclarationContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link ProgMaticParser#elseDeclaration}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitElseDeclaration(ProgMaticParser.ElseDeclarationContext ctx);
-	/**
 	 * Visit a parse tree produced by {@link ProgMaticParser#loopDeclaraion}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

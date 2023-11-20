@@ -137,18 +137,6 @@ public class ProgMaticBaseListener implements ProgMaticListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterElseDeclaration(ProgMaticParser.ElseDeclarationContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitElseDeclaration(ProgMaticParser.ElseDeclarationContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterLoopDeclaraion(ProgMaticParser.LoopDeclaraionContext ctx) { }
 	/**
 	 * {@inheritDoc}

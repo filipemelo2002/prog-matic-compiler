@@ -108,16 +108,6 @@ public interface ProgMaticListener extends ParseTreeListener {
 	 */
 	void exitIfDeclaration(ProgMaticParser.IfDeclarationContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link ProgMaticParser#elseDeclaration}.
-	 * @param ctx the parse tree
-	 */
-	void enterElseDeclaration(ProgMaticParser.ElseDeclarationContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link ProgMaticParser#elseDeclaration}.
-	 * @param ctx the parse tree
-	 */
-	void exitElseDeclaration(ProgMaticParser.ElseDeclarationContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link ProgMaticParser#loopDeclaraion}.
 	 * @param ctx the parse tree
 	 */

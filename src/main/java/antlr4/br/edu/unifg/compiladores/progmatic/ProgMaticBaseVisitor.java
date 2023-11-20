@@ -88,13 +88,6 @@ public class ProgMaticBaseVisitor<T> extends AbstractParseTreeVisitor<T> impleme
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitElseDeclaration(ProgMaticParser.ElseDeclarationContext ctx) { return visitChildren(ctx); }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
 	@Override public T visitLoopDeclaraion(ProgMaticParser.LoopDeclaraionContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
