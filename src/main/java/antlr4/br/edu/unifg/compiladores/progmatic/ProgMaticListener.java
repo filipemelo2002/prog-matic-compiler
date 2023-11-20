@@ -78,6 +78,26 @@ public interface ProgMaticListener extends ParseTreeListener {
 	 */
 	void exitProcedureDeclaration(ProgMaticParser.ProcedureDeclarationContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link ProgMaticParser#parameterList}.
+	 * @param ctx the parse tree
+	 */
+	void enterParameterList(ProgMaticParser.ParameterListContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ProgMaticParser#parameterList}.
+	 * @param ctx the parse tree
+	 */
+	void exitParameterList(ProgMaticParser.ParameterListContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ProgMaticParser#parameter}.
+	 * @param ctx the parse tree
+	 */
+	void enterParameter(ProgMaticParser.ParameterContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ProgMaticParser#parameter}.
+	 * @param ctx the parse tree
+	 */
+	void exitParameter(ProgMaticParser.ParameterContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link ProgMaticParser#procedureCall}.
 	 * @param ctx the parse tree
 	 */
@@ -217,26 +237,6 @@ public interface ProgMaticListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitLogicalNotExpression(ProgMaticParser.LogicalNotExpressionContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link ProgMaticParser#parameterList}.
-	 * @param ctx the parse tree
-	 */
-	void enterParameterList(ProgMaticParser.ParameterListContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link ProgMaticParser#parameterList}.
-	 * @param ctx the parse tree
-	 */
-	void exitParameterList(ProgMaticParser.ParameterListContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link ProgMaticParser#parameter}.
-	 * @param ctx the parse tree
-	 */
-	void enterParameter(ProgMaticParser.ParameterContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link ProgMaticParser#parameter}.
-	 * @param ctx the parse tree
-	 */
-	void exitParameter(ProgMaticParser.ParameterContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link ProgMaticParser#inputStatement}.
 	 * @param ctx the parse tree

@@ -27,7 +27,7 @@ program:
 statements returns [ASTNode node]
     : variableDeclaration {$node = $variableDeclaration.node;}
     | pointerDeclaration
-    | procedureDeclaration
+    | procedureDeclaration {$node  = $procedureDeclaration.node;}
     | procedureCall
     | attribution {$node = $attribution.node;}
     | ifDeclaration {$node = $ifDeclaration.node;}
@@ -48,7 +48,27 @@ attribution returns [ASTNode node]:
 
 pointerDeclaration: TYPE_DECLARATION POINTER IDENTIFIER '=' ADDRESS IDENTIFIER SEMICOLON;
 
-procedureDeclaration: PROCEDURE IDENTIFIER LPAREN parameterList RPAREN  LBRACE (statements)* RBRACE;
+procedureDeclaration returns [ASTNode node]:
+
+    {
+        List<ASTNode> body = new ArrayList<ASTNode>();
+        Map<String, Object> localSymbolTable = new HashMap<String, Object>();
+    }
+    PROCEDURE IDENTIFIER LPAREN parameterList RPAREN
+    LBRACE (statements {body.add($statements.node);})* RBRACE
+    {
+        $node = new ProcedureDeclaration($IDENTIFIER.text, $parameterList.list,body, localSymbolTable);
+    }
+    ;
+
+parameterList returns [List<Parameter> list]:
+    {List<Parameter> paramsList = new ArrayList<Parameter>();}
+    (p1=parameter {paramsList.add($p1.param);} (COMMA p2=parameter {paramsList.add($p2.param);})*)?
+    {$list = paramsList;};
+
+parameter returns [Parameter param]:
+    TYPE_DECLARATION IDENTIFIER {$param = new Parameter($TYPE_DECLARATION.text, $IDENTIFIER.text, null);};
+
 
 procedureCall: IDENTIFIER '(' argumentList ')' SEMICOLON;
 
@@ -121,11 +141,6 @@ primaryExpression returns [ASTNode node]:
 
 logicalNotExpression returns [ASTNode node]:
     LOGICAL_NOT operand=primaryExpression {$node = new LogicalNot($operand.node);};
-
-
-parameterList : (parameter (COMMA parameter)*)?;
-parameter : TYPE_DECLARATION IDENTIFIER;
-
 
 inputStatement: READ LPAREN IDENTIFIER RPAREN SEMICOLON;
 

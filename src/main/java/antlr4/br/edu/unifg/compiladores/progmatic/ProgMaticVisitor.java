@@ -53,6 +53,18 @@ public interface ProgMaticVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitProcedureDeclaration(ProgMaticParser.ProcedureDeclarationContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link ProgMaticParser#parameterList}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitParameterList(ProgMaticParser.ParameterListContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link ProgMaticParser#parameter}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitParameter(ProgMaticParser.ParameterContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link ProgMaticParser#procedureCall}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -136,18 +148,6 @@ public interface ProgMaticVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitLogicalNotExpression(ProgMaticParser.LogicalNotExpressionContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link ProgMaticParser#parameterList}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitParameterList(ProgMaticParser.ParameterListContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link ProgMaticParser#parameter}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitParameter(ProgMaticParser.ParameterContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link ProgMaticParser#inputStatement}.
 	 * @param ctx the parse tree
