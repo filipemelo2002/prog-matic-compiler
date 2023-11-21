@@ -28,7 +28,7 @@ statements returns [ASTNode node]
     : variableDeclaration {$node = $variableDeclaration.node;}
     | pointerDeclaration
     | procedureDeclaration {$node  = $procedureDeclaration.node;}
-    | procedureCall
+    | procedureCall {$node = $procedureCall.node;}
     | attribution {$node = $attribution.node;}
     | ifDeclaration {$node = $ifDeclaration.node;}
     | loopDeclaraion {$node = $loopDeclaraion.node;}
@@ -70,9 +70,14 @@ parameter returns [Parameter param]:
     TYPE_DECLARATION IDENTIFIER {$param = new Parameter($TYPE_DECLARATION.text, $IDENTIFIER.text, null);};
 
 
-procedureCall: IDENTIFIER '(' argumentList ')' SEMICOLON;
+procedureCall returns [ASTNode node]:
+    IDENTIFIER '(' argumentList ')' {$node = new ProcedureCall($IDENTIFIER.text, $argumentList.list);}SEMICOLON;
 
-argumentList: (IDENTIFIER (COMMA IDENTIFIER)*)?;
+argumentList returns [List<ASTNode> list]:
+    {List<ASTNode> args = new ArrayList<ASTNode>();}
+    (a1=logicalExpression {args.add($a1.node);} (COMMA a2=logicalExpression {args.add($a2.node);})*)?
+    {$list = args;}
+    ;
 
 ifDeclaration returns [ASTNode node]: 'if' LPAREN logicalExpression RPAREN
     {
