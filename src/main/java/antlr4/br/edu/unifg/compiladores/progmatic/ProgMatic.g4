@@ -26,7 +26,8 @@ program:
 
 statements returns [ASTNode node]
     : variableDeclaration {$node = $variableDeclaration.node;}
-    | pointerDeclaration
+    | pointerDeclaration {$node  = $pointerDeclaration.node;}
+    | pointerAttribution {$node  = $pointerAttribution.node;}
     | procedureDeclaration {$node  = $procedureDeclaration.node;}
     | procedureCall {$node = $procedureCall.node;}
     | attribution {$node = $attribution.node;}
@@ -46,7 +47,16 @@ variableDeclaration returns [ASTNode node]:
 attribution returns [ASTNode node]:
     IDENTIFIER ATTRIBUTION logicalExpression SEMICOLON {$node = new VarAttribution($IDENTIFIER.text, $logicalExpression.node);};
 
-pointerDeclaration: TYPE_DECLARATION POINTER IDENTIFIER '=' ADDRESS IDENTIFIER SEMICOLON;
+pointerDeclaration returns [ASTNode node]:
+    TYPE_DECLARATION POINTER IDENTIFIER SEMICOLON {$node = new PointerDeclaration($TYPE_DECLARATION.text, $IDENTIFIER.text);}
+    | TYPE_DECLARATION POINTER IDENTIFIER ATTRIBUTION ADDRESS varName=IDENTIFIER SEMICOLON
+    {$node = new PointerDeclaration($TYPE_DECLARATION.text, $IDENTIFIER.text, $varName.text);}
+    ;
+
+pointerAttribution returns [ASTNode node]:
+    IDENTIFIER ATTRIBUTION ADDRESS varName=IDENTIFIER SEMICOLON
+    {$node = new PointerAttribution($IDENTIFIER.text, $varName.text);}
+    ;
 
 procedureDeclaration returns [ASTNode node]:
 
@@ -142,6 +152,7 @@ primaryExpression returns [ASTNode node]:
     | STRING_LITERAL {$node = new Constant($STRING_LITERAL.text.substring(1, $STRING_LITERAL.text.length() - 1));}
     | FLOAT_LITERAL {$node = new Constant(Float.parseFloat($FLOAT_LITERAL.text));}
     | IDENTIFIER {$node = new VarRef($IDENTIFIER.text);}
+    | AMPERSAND IDENTIFIER {$node = new PointerRef($IDENTIFIER.text);}
     | LPAREN expr=logicalOrExpression RPAREN {$node = $expr.node;};
 
 logicalNotExpression returns [ASTNode node]:
@@ -163,6 +174,7 @@ FLOAT_LITERAL: [0-9]+ '.' [0-9]+;
 BOOLEAN_LITERAL: 'true' | 'false';
 POINTER: '->';
 ADDRESS: '$';
+AMPERSAND: '&';
 IDENTIFIER: [a-zA-Z]+ ([a-zA-Z]+ | INTEGER_LITERAL | '_')*;
 SEMICOLON: ';';
 LPAREN : '(';

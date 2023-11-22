@@ -47,6 +47,12 @@ public interface ProgMaticVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitPointerDeclaration(ProgMaticParser.PointerDeclarationContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link ProgMaticParser#pointerAttribution}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitPointerAttribution(ProgMaticParser.PointerAttributionContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link ProgMaticParser#procedureDeclaration}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

@@ -32,10 +32,10 @@ loop(a < 1000) {
   print("Counting A: ");
   print(a);
   a = a + 1;
-}	}
+}
 
 
-sum(a, b);	
+sum(a, b);
 str name = "";
 int birthYear;
 print("what is your name?");
