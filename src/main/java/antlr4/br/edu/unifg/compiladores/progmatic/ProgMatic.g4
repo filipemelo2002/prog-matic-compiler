@@ -35,7 +35,7 @@ statements returns [ASTNode node]
     | ifDeclaration {$node = $ifDeclaration.node;}
     | loopDeclaraion {$node = $loopDeclaraion.node;}
     | printStatement {$node = $printStatement.node;}
-    | inputStatement;
+    | inputStatement {$node = $inputStatement.node;};
 
 printStatement returns [ASTNode node]:
     PRINT LPAREN logicalExpression RPAREN SEMICOLON {$node = new PrintExpression($logicalExpression.node);}
@@ -164,7 +164,10 @@ primaryExpression returns [ASTNode node]:
 logicalNotExpression returns [ASTNode node]:
     LOGICAL_NOT operand=primaryExpression {$node = new LogicalNot($operand.node);};
 
-inputStatement: READ LPAREN IDENTIFIER RPAREN SEMICOLON;
+inputStatement returns [ASTNode node]:
+    READ LPAREN IDENTIFIER RPAREN SEMICOLON
+    {$node = new InputExpression($IDENTIFIER.text);}
+    ;
 
 PRINT: 'print';
 READ:  'read';
