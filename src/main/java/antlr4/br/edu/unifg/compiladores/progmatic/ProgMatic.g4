@@ -28,6 +28,7 @@ statements returns [ASTNode node]
     : variableDeclaration {$node = $variableDeclaration.node;}
     | pointerDeclaration {$node  = $pointerDeclaration.node;}
     | pointerAttribution {$node  = $pointerAttribution.node;}
+    | pointerValueAttribution {$node = $pointerValueAttribution.node;}
     | procedureDeclaration {$node  = $procedureDeclaration.node;}
     | procedureCall {$node = $procedureCall.node;}
     | attribution {$node = $attribution.node;}
@@ -56,6 +57,11 @@ pointerDeclaration returns [ASTNode node]:
 pointerAttribution returns [ASTNode node]:
     IDENTIFIER ATTRIBUTION ADDRESS varName=IDENTIFIER SEMICOLON
     {$node = new PointerAttribution($IDENTIFIER.text, $varName.text);}
+    ;
+
+pointerValueAttribution returns [ASTNode node]:
+    AMPERSAND IDENTIFIER ATTRIBUTION logicalExpression SEMICOLON
+    {$node = new PointerValueAttribution($IDENTIFIER.text, $logicalExpression.node);}
     ;
 
 procedureDeclaration returns [ASTNode node]:

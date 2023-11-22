@@ -78,6 +78,16 @@ public interface ProgMaticListener extends ParseTreeListener {
 	 */
 	void exitPointerAttribution(ProgMaticParser.PointerAttributionContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link ProgMaticParser#pointerValueAttribution}.
+	 * @param ctx the parse tree
+	 */
+	void enterPointerValueAttribution(ProgMaticParser.PointerValueAttributionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ProgMaticParser#pointerValueAttribution}.
+	 * @param ctx the parse tree
+	 */
+	void exitPointerValueAttribution(ProgMaticParser.PointerValueAttributionContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link ProgMaticParser#procedureDeclaration}.
 	 * @param ctx the parse tree
 	 */

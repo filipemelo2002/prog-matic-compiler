@@ -5,22 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6a81c8dd-06e3-490b-96e3-58507d325299" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/br/edu/unifg/compiladores/progmatic/ast/PointerAttribution.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/br/edu/unifg/compiladores/progmatic/ast/PointerDeclaration.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/br/edu/unifg/compiladores/progmatic/ast/PointerRef.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/edu/unifg/compiladores/progmatic/ast/InputExpression.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/edu/unifg/compiladores/progmatic/ast/PointerValueAttribution.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/antlr4/br/edu/unifg/compiladores/progmatic/ProgMatic.g4" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/antlr4/br/edu/unifg/compiladores/progmatic/ProgMatic.g4" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/antlr4/br/edu/unifg/compiladores/progmatic/ProgMatic.interp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/antlr4/br/edu/unifg/compiladores/progmatic/ProgMatic.interp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/antlr4/br/edu/unifg/compiladores/progmatic/ProgMatic.tokens" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/antlr4/br/edu/unifg/compiladores/progmatic/ProgMatic.tokens" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/antlr4/br/edu/unifg/compiladores/progmatic/ProgMaticBaseListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/antlr4/br/edu/unifg/compiladores/progmatic/ProgMaticBaseListener.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/antlr4/br/edu/unifg/compiladores/progmatic/ProgMaticBaseVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/antlr4/br/edu/unifg/compiladores/progmatic/ProgMaticBaseVisitor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/antlr4/br/edu/unifg/compiladores/progmatic/ProgMaticLexer.interp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/antlr4/br/edu/unifg/compiladores/progmatic/ProgMaticLexer.interp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/antlr4/br/edu/unifg/compiladores/progmatic/ProgMaticLexer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/antlr4/br/edu/unifg/compiladores/progmatic/ProgMaticLexer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/antlr4/br/edu/unifg/compiladores/progmatic/ProgMaticLexer.tokens" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/antlr4/br/edu/unifg/compiladores/progmatic/ProgMaticLexer.tokens" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/antlr4/br/edu/unifg/compiladores/progmatic/ProgMaticListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/antlr4/br/edu/unifg/compiladores/progmatic/ProgMaticListener.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/antlr4/br/edu/unifg/compiladores/progmatic/ProgMaticParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/antlr4/br/edu/unifg/compiladores/progmatic/ProgMaticParser.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/antlr4/br/edu/unifg/compiladores/progmatic/ProgMaticVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/antlr4/br/edu/unifg/compiladores/progmatic/ProgMaticVisitor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/test.pm" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/test.pm" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
