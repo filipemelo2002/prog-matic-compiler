@@ -1,72 +1,180 @@
 grammar ProgMatic;
 
-program: (statements)* EOF;
+@parser::header{
+    import java.util.Map;
+    import java.util.HashMap;
+    import java.util.List;
+    import java.util.ArrayList;
+    import br.edu.unifg.compiladores.progmatic.ast.*;
+}
 
-statements
-    : variableDeclaration
-    | pointerDeclaration
-    | procedureDeclaration
-    | procedureCall
-    | attribution
-    | ifDeclaration
-    | loopDeclaraion
-    | printStatement
-    | inputStatement;
+@parser::members {
+	Map<String, Object> symbolTable = new HashMap<String, Object>();
+}
 
-variableDeclaration: typeDeclaration IDENTIFIER SEMICOLON | typeDeclaration attribution;
+program:
+    {
+        List<ASTNode> body = new ArrayList<ASTNode>();
+        Map<String, Object> symbolTable = new HashMap<String, Object>();
+    }
+    (statements {body.add($statements.node);})* EOF
+    {
+        for (ASTNode n : body) {
+            n.execute(symbolTable);
+        }
+    };
 
-attribution: IDENTIFIER ATTRIBUTION (expression | attributionValues) SEMICOLON;
+statements returns [ASTNode node]
+    : variableDeclaration {$node = $variableDeclaration.node;}
+    | pointerDeclaration {$node  = $pointerDeclaration.node;}
+    | pointerAttribution {$node  = $pointerAttribution.node;}
+    | pointerValueAttribution {$node = $pointerValueAttribution.node;}
+    | procedureDeclaration {$node  = $procedureDeclaration.node;}
+    | procedureCall {$node = $procedureCall.node;}
+    | attribution {$node = $attribution.node;}
+    | ifDeclaration {$node = $ifDeclaration.node;}
+    | loopDeclaraion {$node = $loopDeclaraion.node;}
+    | printStatement {$node = $printStatement.node;}
+    | inputStatement {$node = $inputStatement.node;};
 
-pointerDeclaration: typeDeclaration POINTER IDENTIFIER '=' ADDRESS IDENTIFIER SEMICOLON;
+printStatement returns [ASTNode node]:
+    PRINT LPAREN logicalExpression RPAREN SEMICOLON {$node = new PrintExpression($logicalExpression.node);}
+    ;
 
-procedureDeclaration: procedure IDENTIFIER LPAREN parameterList RPAREN  LBRACE (statements)* RBRACE;
+variableDeclaration returns [ASTNode node]:
+    TYPE_DECLARATION IDENTIFIER SEMICOLON {$node = new VarDeclaration($TYPE_DECLARATION.text, $IDENTIFIER.text);}
+    | TYPE_DECLARATION IDENTIFIER ATTRIBUTION  logicalExpression SEMICOLON {$node = new VarDeclaration($TYPE_DECLARATION.text, $IDENTIFIER.text, $logicalExpression.node);};
 
-procedureCall: IDENTIFIER '(' argumentList ')' SEMICOLON;
+attribution returns [ASTNode node]:
+    IDENTIFIER ATTRIBUTION logicalExpression SEMICOLON {$node = new VarAttribution($IDENTIFIER.text, $logicalExpression.node);};
 
-argumentList: (IDENTIFIER (COMMA IDENTIFIER)*)?;
+pointerDeclaration returns [ASTNode node]:
+    TYPE_DECLARATION POINTER IDENTIFIER SEMICOLON {$node = new PointerDeclaration($TYPE_DECLARATION.text, $IDENTIFIER.text);}
+    | TYPE_DECLARATION POINTER IDENTIFIER ATTRIBUTION ADDRESS varName=IDENTIFIER SEMICOLON
+    {$node = new PointerDeclaration($TYPE_DECLARATION.text, $IDENTIFIER.text, $varName.text);}
+    ;
 
-typeDeclaration: 'int' | 'str' | 'char' | 'float' | 'boolean';
+pointerAttribution returns [ASTNode node]:
+    IDENTIFIER ATTRIBUTION ADDRESS varName=IDENTIFIER SEMICOLON
+    {$node = new PointerAttribution($IDENTIFIER.text, $varName.text);}
+    ;
 
-attributionValues:  STRING_LITERAL | CHAR_LITERAL | FLOAT_LITERAL | BOOLEAN_LITERAL;
+pointerValueAttribution returns [ASTNode node]:
+    AMPERSAND IDENTIFIER ATTRIBUTION logicalExpression SEMICOLON
+    {$node = new PointerValueAttribution($IDENTIFIER.text, $logicalExpression.node);}
+    ;
 
-ifDeclaration: 'if' LPAREN conditionalExpression RPAREN LBRACE (statements)* RBRACE (elseDeclaration)*;
+procedureDeclaration returns [ASTNode node]:
 
-elseDeclaration: 'else' LBRACE (statements)* RBRACE;
+    {
+        List<ASTNode> body = new ArrayList<ASTNode>();
+        Map<String, Object> localSymbolTable = new HashMap<String, Object>();
+    }
+    PROCEDURE IDENTIFIER LPAREN parameterList RPAREN
+    LBRACE (statements {body.add($statements.node);})* RBRACE
+    {
+        $node = new ProcedureDeclaration($IDENTIFIER.text, $parameterList.list,body, localSymbolTable);
+    }
+    ;
 
-loopDeclaraion: 'loop' LPAREN conditionalExpression RPAREN LBRACE (statements)* RBRACE;
+parameterList returns [List<Parameter> list]:
+    {List<Parameter> paramsList = new ArrayList<Parameter>();}
+    (p1=parameter {paramsList.add($p1.param);} (COMMA p2=parameter {paramsList.add($p2.param);})*)?
+    {$list = paramsList;};
 
-expression : logicalOrExpression;
-
-conditionalExpression: logicalOrExpression ((EQUAL | NOT_EQUAL | GREATER | LESS | GREATER_EQUAL | LESS_EQUAL))*;
-
-logicalOrExpression : logicalAndExpression (LOGICAL_OR logicalAndExpression)*;
-
-logicalAndExpression : equalityExpression (LOGICAL_AND equalityExpression)*;
-
-equalityExpression : relationalExpression ((EQUAL | NOT_EQUAL) relationalExpression)*;
-
-relationalExpression : additiveExpression ((LESS | GREATER | LESS_EQUAL | GREATER_EQUAL) additiveExpression)*;
-
-additiveExpression : multiplicativeExpression ((PLUS | MINUS) multiplicativeExpression)*;
-
-multiplicativeExpression : unaryExpression ((MULTIPLY | DIVIDE | MODULO) unaryExpression)*;
-
-unaryExpression : (PLUS | MINUS) unaryExpression
-               | primaryExpression;
-
-primaryExpression : logicalNotExpression
-                | INTEGER_LITERAL
-                | IDENTIFIER
-                | LPAREN expression RPAREN;
-
-logicalNotExpression : LOGICAL_NOT primaryExpression;
+parameter returns [Parameter param]:
+    TYPE_DECLARATION IDENTIFIER {$param = new Parameter($TYPE_DECLARATION.text, $IDENTIFIER.text, null);};
 
 
-parameterList : (parameter (COMMA parameter)*)?;
-parameter : typeDeclaration IDENTIFIER;
+procedureCall returns [ASTNode node]:
+    IDENTIFIER '(' argumentList ')' {$node = new ProcedureCall($IDENTIFIER.text, $argumentList.list);}SEMICOLON;
 
-printStatement: print LPAREN (expression | attributionValues) RPAREN SEMICOLON;
-inputStatement: read LPAREN IDENTIFIER RPAREN SEMICOLON;
+argumentList returns [List<ASTNode> list]:
+    {List<ASTNode> args = new ArrayList<ASTNode>();}
+    (a1=logicalExpression {args.add($a1.node);} (COMMA a2=logicalExpression {args.add($a2.node);})*)?
+    {$list = args;}
+    ;
+
+ifDeclaration returns [ASTNode node]: 'if' LPAREN logicalExpression RPAREN
+    {
+        List<ASTNode> ifBody = new ArrayList<ASTNode>();
+        List<ASTNode> elseBody = new ArrayList<ASTNode>();
+    }
+    LBRACE (s1 = statements {ifBody.add($s1.node);})* RBRACE
+    ('else' LBRACE (s2 = statements {elseBody.add($s2.node);})* RBRACE)?
+    {
+        $node = new IfExpression(ifBody, elseBody, $logicalExpression.node);
+    }
+    ;
+
+loopDeclaraion returns [ASTNode node]: 'loop' LPAREN logicalExpression RPAREN
+    {
+        List<ASTNode> body = new ArrayList<ASTNode>();
+    }
+    LBRACE (s1 = statements {body.add($s1.node);})* RBRACE
+    {
+        $node = new Loop($logicalExpression.node, body);
+    }
+    ;
+
+logicalExpression returns [ASTNode node]:
+    logicalOrExpression {$node = $logicalOrExpression.node;}
+    ;
+
+
+logicalOrExpression returns [ASTNode node]:
+    logicalAndExpression  {$node = $logicalAndExpression.node;}
+    (LOGICAL_OR right=logicalAndExpression {$node = new LogicalOr($node, $right.node);})*;
+
+logicalAndExpression returns [ASTNode node]:
+    equalityExpression {$node = $equalityExpression.node;}
+    (LOGICAL_AND right=equalityExpression {$node = new LogicalAnd($node, $right.node);})*;
+
+equalityExpression returns [ASTNode node]:
+    relationalExpression {$node = $relationalExpression.node;}
+    (operator=(EQUAL | NOT_EQUAL) right=relationalExpression {$node = new EqualityExpression($node, $right.node, $operator.text);})*;
+
+relationalExpression returns [ASTNode node]:
+    additiveExpression {$node = $additiveExpression.node;}
+    (operator=(LESS | GREATER | LESS_EQUAL | GREATER_EQUAL) right=additiveExpression {$node = new RelationalExpression($node, $right.node, $operator.text);})*;
+
+additiveExpression returns [ASTNode node]:
+    multiplicativeExpression {$node = $multiplicativeExpression.node;}
+    (operator=(PLUS | MINUS) right = multiplicativeExpression {$node = new AdditiveExpression($node, $right.node, $operator.text);})*;
+
+multiplicativeExpression returns [ASTNode node]:
+    unaryExpression {$node = $unaryExpression.node;}
+    (operator = (MULTIPLY | DIVIDE | MODULO) right = unaryExpression {$node = new MultiplicativeExpression($node, $right.node, $operator.text);})*;
+
+unaryExpression returns [ASTNode node]:
+            operator = (PLUS | MINUS) operand = unaryExpression {$node = new UnaryExpression($operator.text, $operand.node);}
+               | primaryExpression {$node = $primaryExpression.node;};
+
+primaryExpression returns [ASTNode node]:
+    logicalNotExpression {$node = $logicalNotExpression.node;}
+    | INTEGER_LITERAL {$node = new Constant(Integer.parseInt($INTEGER_LITERAL.text));}
+    | BOOLEAN_LITERAL {$node = new Constant(Boolean.parseBoolean($BOOLEAN_LITERAL.text));}
+    | CHAR_LITERAL {$node = new Constant($CHAR_LITERAL.text.charAt(1));}
+    | STRING_LITERAL {$node = new Constant($STRING_LITERAL.text.substring(1, $STRING_LITERAL.text.length() - 1));}
+    | FLOAT_LITERAL {$node = new Constant(Float.parseFloat($FLOAT_LITERAL.text));}
+    | IDENTIFIER {$node = new VarRef($IDENTIFIER.text);}
+    | AMPERSAND IDENTIFIER {$node = new PointerRef($IDENTIFIER.text);}
+    | LPAREN expr=logicalOrExpression RPAREN {$node = $expr.node;};
+
+logicalNotExpression returns [ASTNode node]:
+    LOGICAL_NOT operand=primaryExpression {$node = new LogicalNot($operand.node);};
+
+inputStatement returns [ASTNode node]:
+    READ LPAREN IDENTIFIER RPAREN SEMICOLON
+    {$node = new InputExpression($IDENTIFIER.text);}
+    ;
+
+PRINT: 'print';
+READ:  'read';
+
+PROCEDURE: 'func';
+
+TYPE_DECLARATION: 'int' | 'str' | 'char' | 'float' | 'boolean';
 
 INTEGER_LITERAL: [0-9]+;
 STRING_LITERAL: '"' (~["\r\n])* '"';
@@ -75,6 +183,7 @@ FLOAT_LITERAL: [0-9]+ '.' [0-9]+;
 BOOLEAN_LITERAL: 'true' | 'false';
 POINTER: '->';
 ADDRESS: '$';
+AMPERSAND: '&';
 IDENTIFIER: [a-zA-Z]+ ([a-zA-Z]+ | INTEGER_LITERAL | '_')*;
 SEMICOLON: ';';
 LPAREN : '(';
@@ -97,9 +206,6 @@ LESS_EQUAL : '<=';
 LOGICAL_AND : '&&';
 LOGICAL_OR : '||';
 LOGICAL_NOT : '!';
-print: 'print';
-read:  'read';
 
-procedure: 'func';
 
 WS: [ \t\r\n]+ -> skip;
